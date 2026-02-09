@@ -19,7 +19,7 @@ const CIRCOM_BIN = (() => {
   switch (PLATFORM) {
     case "linux":
       return path.join(INSTALL_DIR, "circom");
-    case "macos":
+    case "darwin":
       return path.join(INSTALL_DIR, "circom");
     case "win32":
       return path.join(INSTALL_DIR, "circom.exe");
@@ -43,6 +43,13 @@ async function main() {
   // Make build directory if doesn't exist
   if (!pathExists(BUILD_DIR)) await fs.mkdir(BUILD_DIR);
 
+  // Check if circom binary exists
+  if (!pathExists(CIRCOM_BIN)) {
+    console.error(`Error: circom binary not found at ${CIRCOM_BIN}`);
+    console.error(`Platform detected: ${PLATFORM}`);
+    process.exit(1);
+  }
+
   // Generate queue for compiling all circuits
   const queue = circuitConfigs.map((circuit) => async () => {
     const name = circuitConfigToName(circuit);
@@ -58,6 +65,10 @@ async function main() {
 
     // Compile
     console.log(`\nCOMPILING ${name}`);
+    const circomFile = path.join(GENERATED_DIR, `${name}.circom`);
+    console.log(`Using circom binary: ${CIRCOM_BIN}`);
+    console.log(`Compiling file: ${circomFile}`);
+    
     const output = await run(
       CIRCOM_BIN,
       [
@@ -67,7 +78,7 @@ async function main() {
         "--wasm",
         "--wat",
         "--c",
-        path.join(GENERATED_DIR, `${name}.circom`),
+        circomFile,
         "--output",
         BUILD_DIR,
       ],

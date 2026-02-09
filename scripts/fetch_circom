@@ -6,7 +6,7 @@ const fs = require("node:fs/promises");
 const { pathExists, cliArguments, run } = require("../lib/shared.js");
 
 // Supported OSs list
-const supportedOSs = ["linux", "macos", "win32"];
+const supportedOSs = ["linux", "macos", "win32", "darwin"];
 
 // Constants
 const INSTALL_DIR = path.join(__dirname, "../bin");
@@ -17,6 +17,8 @@ const URL = (() => {
     case "linux":
       return `https://github.com/iden3/circom/releases/download/v${VERSION}/circom-linux-amd64`;
     case "macos":
+      return `https://github.com/iden3/circom/releases/download/v${VERSION}/circom-macos-amd64`;
+    case "darwin":
       return `https://github.com/iden3/circom/releases/download/v${VERSION}/circom-macos-amd64`;
     case "win32":
       return `https://github.com/iden3/circom/releases/download/v${VERSION}/circom-windows-amd64.exe`;
@@ -29,6 +31,8 @@ const CIRCOM_BIN = (() => {
     case "linux":
       return path.join(INSTALL_DIR, "circom");
     case "macos":
+      return path.join(INSTALL_DIR, "circom");
+    case "darwin":
       return path.join(INSTALL_DIR, "circom");
     case "win32":
       return path.join(INSTALL_DIR, "circom.exe");
