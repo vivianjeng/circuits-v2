@@ -10,8 +10,11 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - name: Install dependencies
+              run: brew install protobuf
+
             - name: Running circom_witnesscalc.sh
               run: ./scripts/circom_witnesscalc.sh
-              
+
             - name: Running snarkjs_verification.sh
               run: ./scripts/snarkjs_verification.sh
