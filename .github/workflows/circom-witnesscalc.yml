@@ -4,7 +4,7 @@ on:
     push:
 
 jobs:
-    test:
+    circom-witnesscalc:
         runs-on: macos-latest
 
         steps:
@@ -25,5 +25,9 @@ jobs:
             - name: Running circom_witnesscalc.sh
               run: ./scripts/circom_witnesscalc.sh
 
+    snarkjs-verification:
+        runs-on: macos-latest
+
+        steps:
             - name: Running snarkjs_verification.sh
               run: ./scripts/snarkjs_verification.sh
