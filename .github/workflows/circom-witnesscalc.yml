@@ -1,0 +1,17 @@
+name: Circom Witnesscalc
+
+on:
+    push:
+
+jobs:
+    test:
+        runs-on: macos-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Running circom_witnesscalc.sh
+              run: ./scripts/circom_witnesscalc.sh
+              
+            - name: Running snarkjs_verification.sh
+              run: ./scripts/snarkjs_verification.sh
