@@ -13,7 +13,8 @@ cd "$CIRCOM_WITNESSCALC_DIR"
 
 # build the witness graph
 if [ ! -f "$CURRENT_DIR/build/13x01.bin" ]; then
-    cargo run --package build-circuit --bin build-circuit --release $CURRENT_DIR/src/generated/13x01.circom $CURRENT_DIR/build/13x01.bin
+    echo "Building 13x01.bin"
+    cargo run --package build-circuit --bin build-circuit --release -- --O2 --use_old_simplification_heuristics $CURRENT_DIR/src/generated/13x01.circom $CURRENT_DIR/build/13x01.bin
 fi
 
 # calculate the witness
